@@ -1,0 +1,112 @@
+Domain creation:-
+
+
+in server manager go to add tools->add roles & Features 
+role based or feature based
+server selection -> select from pool
+server roles->ADDS(active directory domain services)
+add features->next
+select GPO->confirmation->INSTALL
+promote the server to a domain controller link
+add a new forest(like: chiku.com)
+create DSRM(directory service restore mode)
+DNS options(no change)
+additional options 
+install
+​
+
+
+CREATE USER:-
+
+
+tools->active directory users and computers->create a new user in current container->give details and passwords(user created)
+GIVE PERMISSION TO USER TO ALLOW LOGIN IN PARTICULAR DOMAIN
+tools->gpedit->domain->forestname ->gpo->default domain->security filtering(delete)->add(username)->default domain->right click edit->computer conf      ->policies->win settings->ri8 clk ->new ->group ->name,,
+​
+
+
+PASSWORD POLICIES & COMPLEXITY:-
+
+
+win+r-> gpedit.msc ->winsetting->sec.setting->account policies ->password policy
+SET ACCORDING TO REQUIREMENT
+
+LOCKOUT POLICIES
+win+r-> gpedit.msc ->winsetting->sec.setting->account policies -> account lockout policy
+set according to requirement
+to permanent lockout set the lockout duration 0
+
+AUDIT POLICIES
+gpos->win setting->advance audit policy conf.->system audit policy
+set accordingly
+
+
+USB DISABLE
+GPEDIT->comp conf->administrative templates->system->removable storage
+​
+
+
+DISABLE netbios OVER TCP/IP
+control pannel->n/w and sharing center->change adapter setting->ethernet->properties->tcp/ip->advance->wins->select disable
+
+
+
+
+posix
+regedit->HKEYLOCALMACHINE->system->current controlset->control->session manager->Double click on optional and set value to NULL
+
+
+disable SMBv1
+server manager->remove roles and features->features->disable smbv1
+
+
+enable(TLS1.2)& disable(ssl2.0,ssl3.0,tls1.1,tls1.0)
+regedit->HKEYLOCALMACCHINE->system->current control set->control-> security providers->SCHANNEL->protocols
+create protocols for both client and server
+create -TLS 1.2-server                 -enable (if want to enable set value to 1 or disable set value to 0)
+                                       -disable
+                 -client               -enable
+                                       -disable
+                                       
+                                       
+ Enable User Account Control (UAC):
+reg add HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System /v EnableLUA /t Reg
+DWORD /d 1 /f
+
+
+
+Enable Windows Defender Antivirus:
+reg delete “HKLM\Software\Policies\Microsoft\Windows Defender” /v DisableAntiSpyware /f
+
+
+
+Enable Automatic Updates
+reg add “HKLM\Software\Microsoft\Windows\CurrentVersion\WindowsUpdate\AU” /v
+NoAutoUpdate /t Reg_DWORD /d 0 /f
+
+
+
+Automatically download and notify of install for updates
+reg add “HKLM\Software\Microsoft\Windows\CurrentVersion\WindowsUpdate\AU” /v AUOptions /t
+Reg_DWORD /d 3 /f
+
+
+
+Restrict anonymous access:
+reg add HKLM\System\CurrentControlSet\Control\Lsa\ /v restrictanonymous /t Reg_DWORD /d 1 /f
+
+
+
+Block anonymous enumeration of SAM accounts and shares:
+reg add HKLM\System\CurrentControlSet\Control\Lsa\ /v restrictanonymoussam /t Reg_DWORD /d 1 /f
+
+
+
+Send NTLMv2 response only; refuse LM & NTLM:
+reg add HKLM\System\CurrentControlSet\Control\Lsa\ /v lmcompatibilitylevel /t Reg_DWORD /d 5 /f
+
+
+
+Disable admin autologon:
+reg add “HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon” /v AutoAdminLogon /t
+Reg_DWORD /d 0 /f

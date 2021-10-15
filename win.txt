@@ -73,6 +73,27 @@ create -TLS 1.2-server                 -enable (if want to enable set value to 1
                                        -disable
                                        
                                        
+microsoft defender firewall:-
+RDP->
+firewall->search remote desktop
+
+services->
+disable remote registry->
+services.msc->remote registry
+     or
+regedit->HKLM->system->current controlset->services->remote registry->start->set value to 4(1.enable,2.automatic,3.manual,4.disable)
+
+
+unactive user disable->
+go to domain->drivers->select expand->add criteria->user with account disabled->state->convert to LDAP->copy the query 
+open DSA(active directory user computer)
+in DSA-> drivers->filter->advance->paste query
+
+
+startup apps
+taskmgr->startup->disable(win 10 client)
+serach startup apps
+                                       
  Enable User Account Control (UAC):
 reg add HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System /v EnableLUA /t Reg
 DWORD /d 1 /f

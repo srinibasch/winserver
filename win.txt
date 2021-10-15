@@ -32,21 +32,25 @@ win+r-> gpedit.msc ->winsetting->sec.setting->account policies ->password policy
 SET ACCORDING TO REQUIREMENT
 
 LOCKOUT POLICIES
+
 win+r-> gpedit.msc ->winsetting->sec.setting->account policies -> account lockout policy
 set according to requirement
 to permanent lockout set the lockout duration 0
 
 AUDIT POLICIES
+
 gpos->win setting->advance audit policy conf.->system audit policy
 set accordingly
 
 
 USB DISABLE
+
 GPEDIT->comp conf->administrative templates->system->removable storage
 ​
 
 
 DISABLE netbios OVER TCP/IP
+
 control pannel->n/w and sharing center->change adapter setting->ethernet->properties->tcp/ip->advance->wins->select disable
 
 
